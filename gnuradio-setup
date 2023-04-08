@@ -9,7 +9,7 @@ echo "-- Installing PKGs defined in version.yml --"
 packages=$(yq '.pkgs[]' < /tmp/version.yml)
 for pkg in $(echo -e "$packages"); do \
     echo "Installing: ${pkg}" && \
-    DEBIAN_FRONTEND=noninteractive apt install $pkg; \
+    DEBIAN_FRONTEND=noninteractive apt install -y $pkg; \
 done
 echo "---"
 
