@@ -10,3 +10,6 @@ COPY gnuradio-setup /tmp/gnuradio-setup
 RUN chmod +x /tmp/gnuradio-setup && /tmp/gnuradio-setup
 
 RUN rm -rf /tmp/*
+
+ENV LD_LIBRARY_PATH=/user/local/lib:$LD_LIBRARY_PATH
+ENV PYTHONPATH=/usr/local/lib/python3/dist-packages:usr/local/lib/python3/site-packages:$PYTHONPATH
