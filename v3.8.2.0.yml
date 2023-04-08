@@ -1,7 +1,11 @@
 version: v3.8.2.0
-base-container: quay.io/toolbx-images/ubuntu-toolbox:20.04
+
+base-container: quay.io/toolbx-images/ubuntu-toolbox
+
 ubuntu-version: 20.04
+
 uhd-version: v4.0.0.0
+
 pkgs:
   - build-essential
   - cmake

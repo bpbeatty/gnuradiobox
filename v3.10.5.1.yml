@@ -1,7 +1,11 @@
 version: v3.10.5.1
+
 base-container: quay.io/toolbx-images/ubuntu-toolbox
+
 ubuntu-version: 22.04
+
 uhd-version: v4.1.0
+
 pkgs:
   - build-essential
   - cmake
@@ -54,6 +58,7 @@ pkgs:
   - libspdlog-dev
   - python3-packaging
   - python3-jsonschema
+
 pip:
   - pygccxml
   - pyqtgraph

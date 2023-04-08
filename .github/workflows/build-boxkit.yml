@@ -106,8 +106,8 @@ jobs:
           tags: ${{ env.IMAGE_TAGS }}
           build-args: |
             BASE_CONTAINER_URL=${{ env.BASE_CONTAINER_URL }}
-            VERSION=${{ env.VERSION }}
             UBUNTU_MAJOR_VERSION=${{ env.UBUNTU_MAJOR_VERSION }}
+            VERSION=${{ matrix.version }}
           labels: ${{ steps.meta.outputs.labels }}
           oci: false
           
