@@ -62,7 +62,7 @@ make install
 ldconfig
 popd; popd
 
-# echo 'export LD_LIBRARY_PATH=/user/local/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
+# echo 'export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
 # echo 'export PYTHONPATH=/usr/local/lib/python3/dist-packages:usr/local/lib/python3/site-packages:$PYTHONPATH' >> ~/.bashrc
 
 # sed -i -e 's/Exec=gnuradio-companion %F/Exec=env LD_LIBRARY_PATH=\/usr\/local\/lib:$LD_LIBRARY_PATH PYTHONPATH=\/usr\/local\/lib\/python3\/dist-packages:usr\/local\/lib\/python3\/site-packages:$PYTHONPATH gnuradio-companion %F/g' /usr/local/share/applications/gnuradio-grc.desktop
