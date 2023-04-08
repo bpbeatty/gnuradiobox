@@ -34,10 +34,6 @@ jobs:
       - name: Checkout Push to Registry action
         uses: actions/checkout@v3
 
-      - name: Matrix Variables
-        run: |
-          echo "IMAGE_NAME=${{ format('{0}-{1}', env.IMAGE_BASE_NAME, matrix.version) }}" >> $GITHUB_ENV
-
       - name: Add yq for reading version.yml
         uses: mikefarah/yq@v4.33.2
 
@@ -46,6 +42,7 @@ jobs:
           echo "IMAGE_VERSION=$(yq '.version' ./${{ matrix.version }})" >> $GITHUB_ENV
           echo "BASE_CONTAINER_URL=$(yq '.base-container' ./${{ matrix.version }})" >> $GITHUB_ENV
           echo "UBUNTU_MAJOR_VERSION=$(yq '.ubuntu-version' ./${{ matrix.version }})" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${{ format('{0}-{1}', env.IMAGE_BASE_NAME, env.IMAGE_VERSION) }}" >> $GITHUB_ENV
 
       - name: Generate tags
         id: generate-tags
