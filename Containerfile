@@ -1,8 +1,8 @@
 ARG UBUNTU_MAJOR_VERSION=22.04
 ARG BASE_CONTAINER_URL=quay.io/toolbx-images/ubuntu-toolbox
-ARG VERSION
 
 FROM ${BASE_CONTAINER_URL}:${UBUNTU_MAJOR_VERSION}
+ARG VERSION
 
 LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox or distrobox command" \
