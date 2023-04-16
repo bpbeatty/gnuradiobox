@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # roughly based on this guide: https://kb.ettus.com/Building_and_Installing_the_USRP_Open-Source_Toolchain_(UHD_and_GNU_Radio)_on_Linux
 
@@ -44,7 +44,7 @@ git submodule update --init --recursive
 mkdir build; pushd build
 cmake ../
 make -j$(nproc) # (number of cores in machine)
-# make test
+make test
 make install
 ldconfig
 popd; popd
