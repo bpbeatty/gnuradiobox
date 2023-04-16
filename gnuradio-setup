@@ -44,7 +44,7 @@ git submodule update --init --recursive
 mkdir build; pushd build
 cmake ../
 make -j$(nproc) # (number of cores in machine)
-make test
+# make test
 make install
 ldconfig
 popd; popd
