@@ -26,8 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - v3.8.2.0.yml
-          - v3.10.7.0.yml
+          - v3.8.2.0
+          - v3.10.7.0
     steps:
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
@@ -38,10 +38,10 @@ jobs:
 
       - name: Gather image data from recipe
         run: |
-          echo "IMAGE_VERSION=$(yq '.version' ./${{ matrix.version }})" >> $GITHUB_ENV
-          echo "BASE_CONTAINER_URL=$(yq '.base-container' ./${{ matrix.version }})" >> $GITHUB_ENV
-          echo "UBUNTU_MAJOR_VERSION=$(yq '.ubuntu-version' ./${{ matrix.version }})" >> $GITHUB_ENV
-          echo "IMAGE_NAME=${{ format('{0}-{1}', env.IMAGE_BASE_NAME, $(yq '.version' ./${{matrix.version}}) }}" >> $GITHUB_ENV
+          echo "IMAGE_VERSION=$(yq '.version' ./${{ matrix.version }}.yml)" >> $GITHUB_ENV
+          echo "BASE_CONTAINER_URL=$(yq '.base-container' ./${{ matrix.version }}.yml)" >> $GITHUB_ENV
+          echo "UBUNTU_MAJOR_VERSION=$(yq '.ubuntu-version' ./${{ matrix.version }}.yml)" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${{ format('{0}-{1}', env.IMAGE_BASE_NAME, matrix.version }}" >> $GITHUB_ENV
 
       - name: Generate tags
         id: generate-tags
@@ -107,7 +107,7 @@ jobs:
           build-args: |
             BASE_CONTAINER_URL=${{ env.BASE_CONTAINER_URL }}
             UBUNTU_MAJOR_VERSION=${{ env.UBUNTU_MAJOR_VERSION }}
-            VERSION=${{ matrix.version }}
+            VERSION=${{ matrix.version }}.yml
           labels: ${{ steps.meta.outputs.labels }}
           oci: false
           
