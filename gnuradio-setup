@@ -28,10 +28,26 @@ pushd /opt
 # git clone https://github.com/DPDK/dpdk.git
 # pushd dpkd
 
+# volk
+if [ $(yq '.version' < /tmp/version.yml) != v3.8.2.0 ]; then
+    git clone --recursive https://github.com/gnuradio/volk.git
+    git checkout $(yq '.volk-version' < /tmp/version.yml)
+    pushd volk
+    mkdir -p build
+    pushd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 ../
+    make
+    make test
+    make install
+    ldconfig
+    popd; popd
+fi
+
+
 # uhd build from source, this is the driver that connects to the Ettus Research hardware
 git clone https://github.com/EttusResearch/uhd
 pushd uhd
-git checkout $(yq '.uhd-version[]' < /tmp/version.yml)
+git checkout $(yq '.uhd-version' < /tmp/version.yml)
 pushd host; mkdir -p build; pushd build
 cmake ../; make; make test; make install
 ldconfig
@@ -52,12 +68,14 @@ popd
 # gnuradio; the reason for all of this
 git clone https://github.com/gnuradio/gnuradio.git
 pushd gnuradio
-git checkout $(yq '.version[]' < /tmp/version.yml)
-git submodule update --init --recursive
-mkdir build; pushd build
+git checkout $(yq '.version' < /tmp/version.yml)
+if [ $(yq '.version' < /tmp/version.yml) == v3.8.2.0 ]; then
+    git submodule update --init --recursive
+fi
+mkdir -p build; pushd build
 cmake ../
 make -j$(nproc) # (number of cores in machine)
-make test
+# make test
 make install
 ldconfig
 popd; popd

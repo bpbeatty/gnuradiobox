@@ -1,10 +1,12 @@
-version: v3.10.5.1
+version: v3.10.7.0
 
 base-container: quay.io/toolbx-images/ubuntu-toolbox
 
 ubuntu-version: 22.04
 
-uhd-version: v4.1.0
+uhd-version: v4.1.0.0
+
+volk-version: v3.0.0
 
 pkgs:
   - build-essential

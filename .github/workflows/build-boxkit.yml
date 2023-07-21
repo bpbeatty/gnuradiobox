@@ -27,7 +27,7 @@ jobs:
       matrix:
         version:
           - v3.8.2.0.yml
-          - v3.10.5.1.yml
+          - v3.10.7.0.yml
     steps: 
       # Checkout push-to-registry action GitHub repository
       - name: Checkout Push to Registry action
@@ -90,7 +90,7 @@ jobs:
             ${{ env.IMAGE_NAME }}
           labels: |
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/ublue-os/boxkit/main/README.md
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/bpbeatty/gnuradiobox/main/README.md
 
       # Build image using Buildah action
       - name: Build Image
@@ -145,9 +145,7 @@ jobs:
 
       - name: Sign container image
         run: |
-          echo "${{ env.COSIGN_PRIVATE_KEY }}" > cosign.key
-          wc -c cosign.key
-          cosign sign -y --key cosign.key ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}@${TAGS}
+          cosign sign -y --key env://COSIGN_PRIVATE_KEY ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}@${TAGS}
         env:
           TAGS: ${{ steps.push.outputs.digest }}
           COSIGN_EXPERIMENTAL: false
