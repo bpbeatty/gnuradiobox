@@ -78,3 +78,5 @@ make -j$(nproc) # (number of cores in machine)
 make install
 ldconfig
 popd; popd
+
+rm -rf /opt/*

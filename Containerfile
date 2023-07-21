@@ -6,7 +6,7 @@ ARG VERSION
 
 LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox or distrobox command" \
-      summary="A cloud-native terminal experience" \
+      summary="A cloud-native gnuradio experience" \
       maintainer="<brian@27megahertz.com>"
 
 COPY ${VERSION} /tmp/version.yml
