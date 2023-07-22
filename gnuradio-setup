@@ -23,10 +23,6 @@ echo "---"
 # our workspace
 pushd /opt
 
-# dpdk
-# git clone https://github.com/DPDK/dpdk.git
-# pushd dpkd
-
 # volk
 if [ $(yq '.version' < /tmp/version.yml) != v3.8.2.0 ]; then
     git clone --recursive https://github.com/gnuradio/volk.git
