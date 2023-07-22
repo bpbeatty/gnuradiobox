@@ -24,19 +24,17 @@ echo "---"
 pushd /opt
 
 # volk
-if [ $(yq '.version' < /tmp/version.yml) != v3.8.2.0 ]; then
-    git clone --recursive https://github.com/gnuradio/volk.git
-    git checkout $(yq '.volk-version' < /tmp/version.yml)
-    pushd volk
-    mkdir -p build
-    pushd build
-    cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 ../
-    make
-    make test
-    make install
-    ldconfig
-    popd; popd
-fi
+git clone --recursive https://github.com/gnuradio/volk.git
+git checkout $(yq '.volk-version' < /tmp/version.yml)
+pushd volk
+mkdir -p build
+pushd build
+cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 ../
+make
+make test
+make install
+ldconfig
+popd; popd
 
 
 # uhd build from source, this is the driver that connects to the Ettus Research hardware

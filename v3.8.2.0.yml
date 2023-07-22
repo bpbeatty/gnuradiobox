@@ -6,6 +6,8 @@ ubuntu-version: 20.04
 
 uhd-version: v4.0.0.0
 
+volk-version: v3.0.0
+
 pkgs:
   - build-essential
   - cmake
@@ -16,6 +18,7 @@ pkgs:
   - git
   - libboost-all-dev
   - libcanberra-gtk-module
+  - libcanberra-gtk3-module
   - libncurses5-dev
   - libgmp3-dev
   - libgmp-dev
