@@ -1,10 +1,17 @@
-FROM quay.io/toolbx-images/ubuntu-toolbox:20.04
+ARG UBUNTU_MAJOR_VERSION=22.04
+ARG BASE_CONTAINER_URL=quay.io/toolbx-images/ubuntu-toolbox
+
+FROM ${BASE_CONTAINER_URL}:${UBUNTU_MAJOR_VERSION}
+ARG VERSION
 
 LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox or distrobox command" \
-      summary="A cloud-native terminal experience" \
+      summary="A cloud-native gnuradio experience" \
       maintainer="<brian@27megahertz.com>"
 
+COPY ${VERSION} /tmp/version.yml
+
+COPY --from=docker.io/mikefarah/yq /usr/bin/yq /usr/bin/yq
 
 COPY gnuradio-setup /tmp/gnuradio-setup
 RUN chmod +x /tmp/gnuradio-setup && /tmp/gnuradio-setup
