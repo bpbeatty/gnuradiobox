@@ -66,9 +66,13 @@ if [ $(yq '.version' < /tmp/version.yml) == v3.8.2.0 ]; then
     git submodule update --init --recursive
 fi
 mkdir -p build; pushd build
-cmake ../
-make -j$(nproc) # (number of cores in machine)
-# make test
+cmake ../ -Werror
+make -j$(nproc) -k
+if [ $(yq '.version' < /tmp/version.yml) == v3.8.2.0 ]; then
+  QT_QPA_PLATFORM=offscreen ctest --output-on-failure
+else
+  QT_QPA_PLATFORM=offscreen ctest --output-on-failure -E "qa_polar_..coder_(sc_)?systematic"
+fi
 make install
 ldconfig
 popd; popd

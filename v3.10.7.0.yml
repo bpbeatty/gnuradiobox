@@ -11,6 +11,7 @@ volk-version: v3.0.0
 pkgs:
   - build-essential
   - cmake
+  - codec2
   - dpdk
   - dpdk-dev
   - doxygen
@@ -25,20 +26,26 @@ pkgs:
   - libgmp-dev
   - libgsl-dev
   - libgtk-3-dev
+  - libcodec2-dev
   - libiio-dev
+  - libjack-jackd2-dev
   - liblog4cpp5-dev
   - libncurses5-dev
   - liborc-0.4-dev
   - libpango-1.0-0
   - libqwt-qt5-dev
   - libqt5opengl5-dev
+  - libqt5svg5-dev
   - libsoapysdr-dev
   - libsdl1.2-dev
   - libsndfile1-dev
   - libspdlog-dev
+  - libthrift-dev
+  - libunwind-dev
   - libusb-1.0-0-dev
   - libusb-dev
   - libzmq3-dev
+  - portaudio19-dev
   - pybind11-dev
   - python-is-python3
   - python3-click
@@ -52,13 +59,16 @@ pkgs:
   - python3-packaging
   - python3-pip
   - python3-pyqt5
+  - python3-pytest
   - python3-scipy
   - python3-sphinx
+  - python3-thrift
   - python3-yaml
   - python3-zmq
   - soapysdr-tools
   - swig
   - texinfo
+  - thrift-compiler
   - vim
   - yasm
 
