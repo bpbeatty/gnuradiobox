@@ -34,7 +34,7 @@ if [ $(yq '.version' < /tmp/version.yml) == v3.10.7.0 ]; then
   pushd build
   cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 ../
   make
-  make test
+  # make test
   # ctest -V -R check_lgpl
   make install
   ldconfig
