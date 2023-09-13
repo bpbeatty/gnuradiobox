@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e
-set -o pipefail
 # roughly based on this guide: https://kb.ettus.com/Building_and_Installing_the_USRP_Open-Source_Toolchain_(UHD_and_GNU_Radio)_on_Linux
 
 # get OS to the most updated state
