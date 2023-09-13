@@ -75,7 +75,7 @@ else
 fi
 make install
 ldconfig
-popd; popd
+popd
 
 # hackrf
 git clone git clone https://git.osmocom.org/sdr/gr-osmosdr.git
