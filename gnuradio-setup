@@ -77,4 +77,15 @@ make install
 ldconfig
 popd; popd
 
+# hackrf
+git clone git clone https://git.osmocom.org/sdr/gr-osmosdr.git
+pushd gr-osmosdr
+git checkout v0.2.4
+mkdir build; pushd build
+cmake ../
+make
+make install
+ldconfig
+popd; popd
+
 rm -rf /opt/*
