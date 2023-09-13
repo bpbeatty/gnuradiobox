@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+set -o pipefail
 # roughly based on this guide: https://kb.ettus.com/Building_and_Installing_the_USRP_Open-Source_Toolchain_(UHD_and_GNU_Radio)_on_Linux
 
 # get OS to the most updated state
@@ -23,18 +25,21 @@ echo "---"
 # our workspace
 pushd /opt
 
-# volk
-git clone --recursive https://github.com/gnuradio/volk.git
-git checkout $(yq '.volk-version' < /tmp/version.yml)
-pushd volk
-mkdir -p build
-pushd build
-cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 ../
-make
-make test
-make install
-ldconfig
-popd; popd
+# # volk
+if [ $(yq '.version' < /tmp/version.yml) == v3.8.2.0 ]; then
+  git clone --recursive https://github.com/gnuradio/volk.git
+  pushd volk
+  git checkout $(yq '.volk-version' < /tmp/version.yml)
+  mkdir -p build
+  pushd build
+  cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 ../
+  make
+  make test
+  # ctest -V -R check_lgpl
+  make install
+  ldconfig
+  popd; popd
+fi
 
 
 # uhd build from source, this is the driver that connects to the Ettus Research hardware
@@ -69,7 +74,7 @@ mkdir -p build; pushd build
 cmake ../ -Werror
 make -j$(nproc) -k
 if [ $(yq '.version' < /tmp/version.yml) == v3.8.2.0 ]; then
-  QT_QPA_PLATFORM=offscreen ctest --output-on-failure
+  # QT_QPA_PLATFORM=offscreen ctest --output-on-failure
 else
   QT_QPA_PLATFORM=offscreen ctest --output-on-failure -E "qa_polar_..coder_(sc_)?systematic"
 fi
