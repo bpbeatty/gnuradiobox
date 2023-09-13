@@ -73,6 +73,7 @@ cmake ../ -Werror
 make -j$(nproc) -k
 if [ $(yq '.version' < /tmp/version.yml) == v3.8.2.0 ]; then
   # QT_QPA_PLATFORM=offscreen ctest --output-on-failure
+  echo 'skip tests'
 else
   QT_QPA_PLATFORM=offscreen ctest --output-on-failure -E "qa_polar_..coder_(sc_)?systematic"
 fi
