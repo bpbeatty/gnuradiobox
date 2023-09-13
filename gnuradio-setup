@@ -26,7 +26,7 @@ echo "---"
 pushd /opt
 
 # # volk
-if [ $(yq '.version' < /tmp/version.yml) == v3.8.2.0 ]; then
+if [ $(yq '.version' < /tmp/version.yml) == v3.10.7.0 ]; then
   git clone --recursive https://github.com/gnuradio/volk.git
   pushd volk
   git checkout $(yq '.volk-version' < /tmp/version.yml)
