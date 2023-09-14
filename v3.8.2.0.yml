@@ -56,4 +56,5 @@ pkgs:
   - swig
   - texinfo
   - vim
+  - xdg-utils
   - yasm
