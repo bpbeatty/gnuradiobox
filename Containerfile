@@ -1,7 +1,7 @@
 ARG BASE_CONTAINER_URL=quay.io/toolbx-images/ubuntu-toolbox
 ARG UBUNTU_VERSION
 
-FROM ${BASE_CONTAINER_URL}:${UBUNTU_MAJOR_VERSION}
+FROM ${BASE_CONTAINER_URL}:${UBUNTU_VERSION}
 ARG VERSION
 
 LABEL com.github.containers.toolbox="true" \
