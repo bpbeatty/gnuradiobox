@@ -2,6 +2,8 @@ version: v3.10.7.0
 
 base-container: quay.io/toolbx-images/ubuntu-toolbox
 
+hackrf-version: v0.2.4
+
 ubuntu-version: 22.04
 
 uhd-version: v4.1.0.0

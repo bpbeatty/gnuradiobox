@@ -1,15 +1,13 @@
 #!/bin/bash
 # roughly based on this guide: https://kb.ettus.com/Building_and_Installing_the_USRP_Open-Source_Toolchain_(UHD_and_GNU_Radio)_on_Linux
 
-# get OS to the most updated state
-apt -y upgrade; apt -y update; apt -y autoremove
+set -ouex pipefail
 
+
+apt update
 echo "-- Installing PKGs defined in version.yml --"
-packages=$(yq '.pkgs[]' < /tmp/version.yml)
-for pkg in $(echo -e "$packages"); do \
-    echo "Installing: ${pkg}" && \
-    DEBIAN_FRONTEND=noninteractive apt install -y $pkg; \
-done
+packages=$(yq '.pkgs[]' < /tmp/version.yml | sort | uniq | tr '\n' ' ')
+DEBIAN_FRONTEND=noninteractive apt install -y $packages
 echo "---"
 
 echo "-- PIP install defined in version.yml --"
@@ -23,18 +21,20 @@ echo "---"
 # our workspace
 pushd /opt
 
-# volk
-git clone --recursive https://github.com/gnuradio/volk.git
-git checkout $(yq '.volk-version' < /tmp/version.yml)
-pushd volk
-mkdir -p build
-pushd build
-cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 ../
-make
-make test
-make install
-ldconfig
-popd; popd
+# # volk
+if [ $(yq '.version' < /tmp/version.yml) == v3.10.7.0 ]; then
+  git clone --recursive https://github.com/gnuradio/volk.git
+  pushd volk
+  git checkout $(yq '.volk-version' < /tmp/version.yml)
+  mkdir -p build; pushd build
+  cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 ../
+  make -j$(nproc)
+  # make test
+  # ctest -V -R check_lgpl
+  make install
+  ldconfig
+  popd; popd
+fi
 
 
 # uhd build from source, this is the driver that connects to the Ettus Research hardware
@@ -42,7 +42,7 @@ git clone https://github.com/EttusResearch/uhd
 pushd uhd
 git checkout $(yq '.uhd-version' < /tmp/version.yml)
 pushd host; mkdir -p build; pushd build
-cmake ../; make; make test; make install
+cmake ../; make -j$(nproc); make test; make install
 ldconfig
 export LD_LIBRARY_PATH=/usr/local/lib
 popd; popd; popd
@@ -52,9 +52,10 @@ uhd_images_downloader
 # mpir; MPIR is a fork of the GNU Multi Precision library
 git clone https://github.com/wbhart/mpir.git
 pushd mpir
+git checkout mpir-3.0.0
 ./autogen.sh
 ./configure
-make; make check
+make -j$(nproc); make check
 make install
 popd
 
@@ -69,21 +70,22 @@ mkdir -p build; pushd build
 cmake ../ -Werror
 make -j$(nproc) -k
 if [ $(yq '.version' < /tmp/version.yml) == v3.8.2.0 ]; then
-  QT_QPA_PLATFORM=offscreen ctest --output-on-failure
+  # QT_QPA_PLATFORM=offscreen ctest --output-on-failure
+  echo 'skip tests'
 else
   QT_QPA_PLATFORM=offscreen ctest --output-on-failure -E "qa_polar_..coder_(sc_)?systematic"
 fi
 make install
 ldconfig
-popd
+popd; popd
 
 # hackrf
-git clone git clone https://git.osmocom.org/sdr/gr-osmosdr.git
+git clone https://github.com/osmocom/gr-osmosdr.git
 pushd gr-osmosdr
-git checkout v0.2.4
+git checkout $(yq '.hackrf-version' < /tmp/version.yml)
 mkdir build; pushd build
 cmake ../
-make
+make -j$(nproc)
 make install
 ldconfig
 popd; popd

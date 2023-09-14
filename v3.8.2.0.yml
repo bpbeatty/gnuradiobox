@@ -2,6 +2,8 @@ version: v3.8.2.0
 
 base-container: quay.io/toolbx-images/ubuntu-toolbox
 
+hackrf-version: gr3.8
+
 ubuntu-version: 20.04
 
 uhd-version: v4.0.0.0
