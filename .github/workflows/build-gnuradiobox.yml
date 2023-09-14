@@ -87,7 +87,7 @@ jobs:
           labels: |
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
             org.opencontainers.image.version=${{ matrix.version }}
-            org.opencontainers.image.description=Gnuradio in a box
+            org.opencontainers.image.description=GNU Radio in a box
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/bpbeatty/gnuradiobox/main/README.md
 
       # Build image using Buildah action
