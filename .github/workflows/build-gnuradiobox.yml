@@ -102,7 +102,7 @@ jobs:
             ${{ steps.generate-tags.outputs.alias_tags }}
           build-args: |
             BASE_CONTAINER_URL=${{ env.BASE_CONTAINER_URL }}
-            UBUNTU_VERSION=${{ env.UBUNTU_MAJOR}}
+            UBUNTU_VERSION=${{ env.UBUNTU_VERSION }}
             VERSION=${{ matrix.version }}.yml
           labels: ${{ steps.meta.outputs.labels }}
           oci: false
